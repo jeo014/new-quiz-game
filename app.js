@@ -21,13 +21,6 @@ $(function() {
 
 	$(".js-welcome-message").html(messages.text[0]);
 
-
-// hide welcome text and show question and options
-	$(".begin").on("click", function() {
-    	$(".js-question, .js-options").removeClass("hidden");
-    	$(".js-welcome").hide();
-	});
-
 // global questions and answers
 
 	var questionsAndAnswers = {
@@ -42,19 +35,31 @@ $(function() {
 	var o1Selector = 0;
 	var o2Selector = 1;
 	var o3Selector = 2;
-	var ansSelector = 0;
+	var ansSelector = 1;
+
+    var currentQuestion = (questionsAndAnswers.question[qSelector]);
+    var currentOption1 = (questionsAndAnswers.options[o1Selector]);
+    var currentOption2 = (questionsAndAnswers.options[o2Selector]);
+    var currentOption3 = (questionsAndAnswers.options[o3Selector]);
+    var currentAnswer = (questionsAndAnswers.answers[ansSelector]);
 
 // question and score count
 
 	var score = {
 		correct: 0,
-	}
+		incorrect: 0,
+	};
 
 	var questionNumber = 0;
 
-// triggered on button click
 
-	$("button").on("click", function() {
+// WHEN USER HITS 'BEGIN'
+	$(".begin").on("click", function() {
+
+// hide welcome text and show question and options
+    	$(".js-question, .js-options").removeClass("hidden");
+    	$(".js-welcome").hide();
+
 
 // add hidden classes to keep welcome text hidden
 
@@ -62,24 +67,27 @@ $(function() {
 			$(".js-welcome").addClass("hidden");
 		};
 
-// show questions and submit		
+// show questions and submit button		
 
 		if ($(".js-question, .js-options, .submit").hasClass("hidden")) {
 			$(this).removeClass("hidden");
 		};
 
-// set questions
-
-	    var currentQuestion = (questionsAndAnswers.question[qSelector]);
-	    var currentOption1 = (questionsAndAnswers.options[o1Selector]);
-	    var currentOption2 = (questionsAndAnswers.options[o2Selector]);
-	    var currentOption3 = (questionsAndAnswers.options[o3Selector]);
-	    var currentAnswer = (questionsAndAnswers.answers[ansSelector]);
-
 	    $(".question").html(currentQuestion);
 	    $("#o1").html(currentOption1);
 	    $("#o2").html(currentOption2);
 	    $("#o3").html(currentOption3);
+
+// show score and question number
+		$(".score-display").html("Your score is " + score.correct + " out of 5");
+		$(".question-number").html("Question " + questionNumber + " of 5");
+	});
+
+// WHEN USER SUBMITS A QUESTION
+
+	$(".submit").on("click", function() {
+
+// reset questions
 
 	    qSelector = qSelector + 1;
 	    o1Selector = o1Selector + 3;
@@ -87,18 +95,20 @@ $(function() {
 	    o3Selector = o3Selector +3;
 	    ansSelector = ansSelector + 1;
 
-// show score
-		$(".score-display").html("Your score is " + score.correct + " out of 5");
-
-// increment and show question number
+// increment question number
 		questionNumber = questionNumber +1;
-		$(".question-number").html("Question " + questionNumber + " of 5");
 
-
+// check answer 
+		if ($('input[name="radios"]:checked').val() == currentAnswer) {
+			score.correct++;
+		}
+		else {
+			score.incorrect++;
+		}
 	})
-
-
-
-
-
+console.log(score);
 })
+
+
+
+
