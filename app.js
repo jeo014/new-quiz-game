@@ -13,7 +13,7 @@
 
 $(function() {
 
-// start the game
+// display welcome text
 
 	var messages = {
 		text: ['Welcome to the quiz game!']
@@ -21,13 +21,14 @@ $(function() {
 
 	$(".js-welcome-message").html(messages.text[0]);
 
+
+// hide welcome text and show question and options
 	$(".begin").on("click", function() {
-    	$(".options").removeClass("hidden");
+    	$(".js-question, .js-options").removeClass("hidden");
     	$(".js-welcome").hide();
 	});
 
-
-
+// global questions and answers
 
 	var questionsAndAnswers = {
 		question: ['Pick the fruit'],
@@ -35,22 +36,39 @@ $(function() {
 		answers: ['1','3']
 	};
 
+// selectors to progress through QA arrays
+
 	var qSelector = 0;
 	var o1Selector = 0;
 	var o2Selector = 1;
 	var o3Selector = 2;
 	var ansSelector = 0;
 
+// question and score count
+
 	var score = {
 		correct: 0,
 	}
 
-	// $(".submit").on("click", function() {
-	// 	if (!$(".js-welcome").hasClass("hidden") {
-	// 		$(this).addClass("hidden");
-	// 	})
+	var questionNumber = 0;
 
+// triggered on button click
 
+	$("button").on("click", function() {
+
+// add hidden classes to keep welcome text hidden
+
+		if(!$(".js-welcome").hasClass("hidden")) {
+			$(".js-welcome").addClass("hidden");
+		};
+
+// show questions and submit		
+
+		if ($(".js-question, .js-options, .submit").hasClass("hidden")) {
+			$(this).removeClass("hidden");
+		};
+
+// set questions
 
 	    var currentQuestion = (questionsAndAnswers.question[qSelector]);
 	    var currentOption1 = (questionsAndAnswers.options[o1Selector]);
@@ -69,9 +87,17 @@ $(function() {
 	    o3Selector = o3Selector +3;
 	    ansSelector = ansSelector + 1;
 
+// show score
+		$(".score-display").html("Your score is " + score.correct + " out of 5");
+
+// increment and show question number
+		questionNumber = questionNumber +1;
+		$(".question-number").html("Question " + questionNumber + " of 5");
 
 
 	})
+
+
 
 
 
