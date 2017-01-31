@@ -90,6 +90,7 @@ $(function() {
 		$(".question-number").html("Question " + questionNumber + " of 4");
 
 // compare selected answer with correct answer
+// this doesn't work but it works here: https://jsbin.com/zegofid/edit?html,js,console,output
 		var ansSelector = 0;
 	    var currentAnswer = (questionsAndAnswers.answers[ansSelector]);
 
