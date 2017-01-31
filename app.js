@@ -29,9 +29,11 @@ $(function() {
 	});
 
 // global questions and answers
-
+  
+    var quizLength = '4';
+  
 	var questionsAndAnswers = {
-		question: ['Pick the fruit'],
+		question: ['Pick the fruit:'],
 		options: ['Pineapple', 'Porcupine', 'Police officer', 'Balloon', 'Ballerina', 'Banana', 'Orange', 'Opossum', 'Octopus', 'Avalanche', 'Apple', 'Avenue'],
 		answers: ['1', '3', '1', '2']
 	};
@@ -42,14 +44,18 @@ $(function() {
 	var o1Selector = 0;
 	var o2Selector = 1;
 	var o3Selector = 2;
-
-	var questionNumber = 0;
-
-	var score = 0;
+	var ansSelector = 0;
+	
+    var questionNumber = 0;
+  
+// set score
+    var score = {
+          correct: '0',
+    }
 
 // triggered on button click
 
-	$("button").on("click", function() {
+	$(".increment").on("click", function() {
 
 // clear radios
 		$("input").prop("checked", false);
@@ -72,6 +78,7 @@ $(function() {
 	    var currentOption1 = (questionsAndAnswers.options[o1Selector]);
 	    var currentOption2 = (questionsAndAnswers.options[o2Selector]);
 	    var currentOption3 = (questionsAndAnswers.options[o3Selector]);
+        var currentAnswer = (questionsAndAnswers.answers[ansSelector]);
 
 	    $(".question").html(currentQuestion);
 	    $("#o1").html(currentOption1);
@@ -87,25 +94,36 @@ $(function() {
 	    ansSelector = ansSelector + 1;
 
 // show question number
-		$(".question-number").html("Question " + questionNumber + " of 4");
-
+		$(".question-number").html("Question " + questionNumber + " of " + quizLength);
+      
 // compare selected answer with correct answer
-// this doesn't work but it works here: https://jsbin.com/zegofid/edit?html,js,console,output
-		var ansSelector = 0;
-	    var currentAnswer = (questionsAndAnswers.answers[ansSelector]);
 
 	     if ($('input[name="options"]:checked').val() == currentAnswer) {
-			score++;
+			score.correct++;
 	     }
 
+// show answer
+         $(".answer-display").html("The answer is " + currentAnswer)
+      
 // show score
-		$(".score-display").html("Your score is " + score + " out of 4");		
-
+		$(".score-display").html("Your score is " + score.correct + " out of " + quizLength);		
 
 	    console.log($('input[name="options]:checked').val());
 	    console.log(currentAnswer);
 	    console.log(score);
-
+      
+// end game
+        if (qSelector > quizLength) {
+          $(".js-question, .js-options, .submit, .score-display, .question-number").addClass("hidden");
+          $(".js-results-message").html("Game Over. You scored " + score.correct + " out of " + quizLength);
+          $(".js-results-message").append('<br><button class="reload">Begin Again</button></br>');
+        };
+      
 	})
-
+    
+// reload page    
+    $(".js-results-message").on("click", ".reload", function(){
+      location.reload();
+    })
+    
 })
