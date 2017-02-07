@@ -17,21 +17,35 @@ $(function() {
 
 // global questions and answers
   
-    var quizLength = '4';
-  
-	var questionsAndAnswers = {
-		question: ['Pick the fruit:'],
-		options: ['Pineapple', 'Porcupine', 'Police officer', 'Balloon', 'Ballerina', 'Banana', 'Orange', 'Opossum', 'Octopus', 'Avalanche', 'Apple', 'Avenue'],
-		answers: ['1', '3', '1', '2']
-	};
+    var quizLength = '3';
+
+    var questionsAndAnswers = [
+    	{
+    		question: 'Pick the fruit:',
+    		o1: 'Pineapple',
+    		o2: 'Police Officer',
+    		o3: 'Porcupine',
+    		answer: '1'
+    	},
+    	{
+    		question: 'Pick the animal:',
+    		o1: 'Orange',
+    		o2: 'Octopus',
+    		o3: 'Ocean',
+    		answer: '2'
+    	},
+    	{
+    		question: 'Pick the superhero:',
+    		o1: 'Catman',
+    		o2: 'Ratman',
+    		o3: 'Batman',
+    		answer: '3'
+    	}
+    	];
 
 // selectors to progress through QA arrays
 
 	var qSelector = 0;
-	var o1Selector = 0;
-	var o2Selector = 1;
-	var o3Selector = 2;
-	var ansSelector = 0;
 	
     var questionNumber = 0;
   
@@ -61,11 +75,11 @@ $(function() {
 
 // set questions
 
-	    var currentQuestion = (questionsAndAnswers.question[qSelector]);
-	    var currentOption1 = (questionsAndAnswers.options[o1Selector]);
-	    var currentOption2 = (questionsAndAnswers.options[o2Selector]);
-	    var currentOption3 = (questionsAndAnswers.options[o3Selector]);
-        var currentAnswer = (questionsAndAnswers.answers[ansSelector]);
+	    var currentQuestion = (questionsAndAnswers[qSelector].question);
+	    var currentOption1 = (questionsAndAnswers[qSelector].o1);
+	    var currentOption2 = (questionsAndAnswers[qSelector].o2);
+	    var currentOption3 = (questionsAndAnswers[qSelector].o3);
+        var currentAnswer = (questionsAndAnswers[qSelector].answer);
 
 	    $(".question").html(currentQuestion);
 	    $("#o1").html(currentOption1);
@@ -75,10 +89,6 @@ $(function() {
 // increment everything
 		questionNumber = questionNumber + 1;
 		qSelector = qSelector + 1;
-	    o1Selector = o1Selector + 3;
-	    o2Selector = o2Selector +3;
-	    o3Selector = o3Selector +3;
-	    ansSelector = ansSelector + 1;
 
 // show question number
 		$(".question-number").html("Question " + questionNumber + " of " + quizLength);
@@ -113,7 +123,7 @@ $(function() {
 	    console.log(score);
       
 // end game
-        if (qSelector > quizLength) {
+        if (questionNumber > quizLength) {
           $(".js-question, .js-options, .submit, .score-display, .question-number").addClass("hidden");
           $(".js-results-message").html("Game Over. You scored " + score.correct + " out of " + quizLength);
           $(".js-results-message").append('<br><button class="reload">Begin Again</button></br>');
