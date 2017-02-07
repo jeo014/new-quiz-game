@@ -107,7 +107,8 @@ $(function() {
 // show score
 		$(".score-display").html("Your score is " + score.correct + " out of " + quizLength);		
 
-	    console.log($('input[name="options]:checked').val());
+	    console.log($('input[name="options"]:checked'));
+	    console.log($('input[name="options"]:checked').val());
 	    console.log(currentAnswer);
 	    console.log(score);
       
